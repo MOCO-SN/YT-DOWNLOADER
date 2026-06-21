@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#030008"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/mainPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/panel_bg"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_name"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:fontFamily="@font/akronim"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- URL Input -->
+        <EditText
+            android:id="@+id/urlInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter YouTube URL"
+            android:textColor="#00FF00"
+            android:textColorHint="#B0B0B0"
+            android:inputType="textUri"
+            android:textSize="14sp"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text"
+            android:autofillHints="none"/>
+
+        <!-- Fetch Button -->
+        <Button
+            android:id="@+id/fetchResBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fetch Info"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/menu_btn"
+            android:textColor="#FFFFFF"/>
+
+        <!-- PREVIEW SECTION -->
+        <LinearLayout
+            android:id="@+id/previewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="12dp"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/videoThumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:background="#2A2A2A"/>
+
+            <TextView
+                android:id="@+id/videoTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginTop="8dp"
+                android:text="Video Title"/>
+        </LinearLayout>
+
+        <!-- Format Selection -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Format"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:layout_marginTop="12dp"/>
+
+        <RadioGroup
+            android:id="@+id/formatGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioMp4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Video (MP4)"
+                android:textColor="#FFFFFF"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/radioMp3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Audio (MP3)"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="20dp"/>
+        </RadioGroup>
+
+        <!-- Resolution -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/resLabel"
+            android:text="Resolution"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:layout_marginTop="10dp"/>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:backgroundTint="#FFFFFF"/>
+
+        <!-- Download Button -->
+        <Button
+            android:id="@+id/downloadBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Download"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/menu_btn"
+            android:textColor="#FFFFFF"/>
+
+        <!-- PROGRESS SECTION -->
+        <LinearLayout
+            android:id="@+id/progressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/progressStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textColor="#C44CFF"
+                android:textSize="11sp"/>
+
+            <ProgressBar
+                android:id="@+id/downloadProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="0"/>
+        </LinearLayout>
+
+        <!-- DIVIDER LINE -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3A3A4A"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- FOOTER SECTION -->
+        <LinearLayout
+            android:id="@+id/footerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="4dp">
+            <!-- Social Icons Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="8dp">
+                <ImageView
+                    android:layout_width="28dp"
+                    android:id="@+id/profile"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_developer"
+                    android:padding="4dp"
+                    android:background="@drawable/social_icon_bg"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_github"
+                    android:id="@+id/github"
+                    android:padding="4dp"
+                    android:background="@drawable/social_icon_bg"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_instagram"
+                    android:padding="4dp"
+                    android:id="@+id/instagram"
+                    android:background="@drawable/social_icon_bg"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_linkedin"
+                    android:padding="4dp"
+                    android:background="@drawable/social_icon_bg"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:id="@+id/linkedin"
+                    android:focusable="true"/>
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/social_icon_bg"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/software"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_link" />
+            </LinearLayout>
+
+            <!-- Copyright -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="© 2026 MOCOSN. All rights reserved."
+                android:textColor="#555555"
+                android:textSize="9sp"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

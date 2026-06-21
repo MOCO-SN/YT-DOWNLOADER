@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">YT Downloader</string>
+    <string name="github_url">https://github.com/mocosn</string>
+    <string name="developer_name">MOCOSN</string>
+    <string name="software_name">YT Downloader</string>
+    <string name="version_name">2.0.0</string>
+    <string name="copyright">© 2026 MOCOSN. All rights reserved.</string>
+
+</resources>
