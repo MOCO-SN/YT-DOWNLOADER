@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,21 +22,27 @@ import com.bumptech.glide.Glide;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout panel, previewLayout, progressLayout;
-    EditText urlInput;
-    Button fetchInfoBtn, downloadBtn;
+    MaterialCardView panel, previewLayout;
+    LinearLayout progressLayout;
     Spinner resSpinner;
     ImageView videoThumbnail;
     TextView videoTitle, progressStatus;
-    ProgressBar downloadProgressBar;
+    private MaterialButton fetchInfoBtn, downloadBtn;
+    private TextInputEditText urlInput;
+    LinearProgressIndicator downloadProgressBar;
     RadioGroup formatGroup;
     PyObject pyModule;
-    ImageView profile, github, linkedin, instagram, website;
+    MaterialButton profile, github, linkedin, instagram, website;
 
     private static final int STORAGE_PERMISSION_CODE = 101;
 
@@ -106,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         Python py = Python.getInstance();
         pyModule = py.getModule("app");
 
-        panel = findViewById(R.id.mainPanel);
         urlInput = findViewById(R.id.urlInput);
         fetchInfoBtn = findViewById(R.id.fetchResBtn);
         downloadBtn = findViewById(R.id.downloadBtn);
@@ -120,19 +126,21 @@ public class MainActivity extends AppCompatActivity {
         downloadProgressBar = findViewById(R.id.downloadProgressBar);
         progressStatus = findViewById(R.id.progressStatus);
 
-        Animation pulse = AnimationUtils.loadAnimation(this, R.anim.pulse);
-        panel.startAnimation(pulse);
-
         fetchInfoBtn.setOnClickListener(v -> {
-            String url = urlInput.getText().toString();
+            String url = "";
+
+            if (urlInput.getText() != null) {
+                url = urlInput.getText().toString().trim();
+            }
             if (url.isEmpty()) {
                 Toast.makeText(this, "Please enter a URL", Toast.LENGTH_SHORT).show();
                 return;
             }
-            
+
+            String finalUrl = url;
             new Thread(() -> {
                 try {
-                    PyObject infoObj = pyModule.callAttr("get_video_info", url);
+                    PyObject infoObj = pyModule.callAttr("get_video_info", finalUrl);
                     Map<PyObject, PyObject> info = infoObj.asMap();
                     
                     if (info.containsKey(py.getBuiltins().get("str").call("error"))) {
@@ -147,8 +155,18 @@ public class MainActivity extends AppCompatActivity {
                     
                     runOnUiThread(() -> {
                         videoTitle.setText(title);
-                        Glide.with(this).load(thumbnailUrl).into(videoThumbnail);
+                        Glide.with(this)
+                                .load(thumbnailUrl)
+                                .centerCrop()
+                                .into(videoThumbnail);
+                        previewLayout.setAlpha(0f);
                         previewLayout.setVisibility(View.VISIBLE);
+
+                        previewLayout.animate()
+                                .alpha(1f)
+                                .translationY(0)
+                                .setDuration(350)
+                                .start();
                         
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                                 this,
@@ -229,13 +247,19 @@ public class MainActivity extends AppCompatActivity {
             downloadProgressBar.setProgress(0);
             progressStatus.setText("0%");
             downloadBtn.setEnabled(false);
+            downloadBtn.setText("Downloading...");
+            downloadBtn.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
+            urlInput.setEnabled(false);
+            fetchInfoBtn.setEnabled(false);
+            formatGroup.setEnabled(false);
+            resSpinner.setEnabled(false);
         });
         
         new Thread(() -> {
             try {
                 // Create callback object for Python to update
                 DownloadCallback callback = progress -> runOnUiThread(() -> {
-                    downloadProgressBar.setProgress(progress);
+                    downloadProgressBar.setProgressCompat(progress, true);
                     progressStatus.setText(progress + "%");
                 });
 
@@ -243,15 +267,25 @@ public class MainActivity extends AppCompatActivity {
                 String message = result.toString();
                 
                 runOnUiThread(() -> {
-                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                    Snackbar.make(panel, message, Snackbar.LENGTH_LONG).show();
                     progressLayout.setVisibility(View.GONE);
                     downloadBtn.setEnabled(true);
+                    downloadBtn.setText("Download");
+                    urlInput.setEnabled(true);
+                    fetchInfoBtn.setEnabled(true);
+                    formatGroup.setEnabled(true);
+                    resSpinner.setEnabled(true);
                 });
             } catch (Exception e) {
                 runOnUiThread(() -> {
                     Toast.makeText(this, "Download Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     progressLayout.setVisibility(View.GONE);
                     downloadBtn.setEnabled(true);
+                    downloadBtn.setText("Download");
+                    urlInput.setEnabled(true);
+                    fetchInfoBtn.setEnabled(true);
+                    formatGroup.setEnabled(true);
+                    resSpinner.setEnabled(true);
                 });
             }
         }).start();
