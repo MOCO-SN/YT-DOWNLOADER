@@ -2,23 +2,29 @@
 
 A lightweight Android application for downloading YouTube videos and audio, built with **Java** and **Chaquopy** (Python integration on Android).
 
+![Android](https://img.shields.io/badge/Android-11%2B-3DDC84?style=flat)
+![Java](https://img.shields.io/badge/Java-11-007396?style=flat)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=flat)
+![Chaquopy](https://img.shields.io/badge/Chaquopy-17.0.0-FF9800?style=flat)
+![License](https://img.shields.io/badge/License-MIT-607D8B?style=flat)
+
 ## Features
 
 - **YouTube Video Info Fetching** — Retrieve title, thumbnail, and available resolutions from any YouTube URL
 - **MP4 Video Download** — Download videos in selectable resolutions (up to highest available)
 - **MP3 Audio Download** — Extract audio-only streams in high bitrate MP3 format
 - **Progress Tracking** — Real-time download progress with visual progress bar
-- **Modern Dark UI** — Material Design-inspired interface with custom gradients and animations
+- **Modern Light UI** — Material Design-inspired interface with custom gradients and animations
 
 ## Screenshots
 
 | Main UI | Fetch Info |
 |---------|-----------|
-| <img src="img/mainUi.jpeg" width="260"/> | <img src="img/fetch.jpeg" width="260"/> |
+| <img src="https://raw.githubusercontent.com/MOCO-SN/YT-DOWNLOADER/main/img/mainUi.jpeg" width="260"/> | <img src="https://raw.githubusercontent.com/MOCO-SN/YT-DOWNLOADER/main/img/fetch.jpeg" width="260"/> |
 
 | Quality Selection | Downloaded Folder |
 |-------------------|-------------------|
-| <img src="img/quality.jpeg" width="260"/> | <img src="img/folder.jpeg" width="260"/> |
+| <img src="https://raw.githubusercontent.com/MOCO-SN/YT-DOWNLOADER/main/img/quality.jpeg" width="260"/> | <img src="https://raw.githubusercontent.com/MOCO-SN/YT-DOWNLOADER/main/img/folder.jpeg" width="260"/> |
 
 ## Tech Stack
 
