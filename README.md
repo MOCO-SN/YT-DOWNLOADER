@@ -58,7 +58,7 @@ The app uses **Chaquopy** to embed Python code directly into the Android app. Th
 
 - **Android Studio** (Fox or newer recommended)
 - **JDK 11**
-- **Python 3.13** (installed at `C:\Users\Sachin Patel\AppData\Local\Programs\Python\Python313\python.exe`)
+- **Python 3.13** (installed at `C:\Users\mocosn\AppData\Local\Programs\Python\Python313\python.exe`)
 - **Android SDK** with API level 36
 
 ## Building

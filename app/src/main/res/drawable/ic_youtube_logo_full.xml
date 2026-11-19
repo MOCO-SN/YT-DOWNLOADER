@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="84dp"
+    android:height="58dp"
+    android:viewportWidth="84"
+    android:viewportHeight="58">
+  <!-- YouTube Red Container -->
+  <path
+      android:fillColor="#FF0000"
+      android:pathData="M82.2,9.2C81.2,5.5 78.3,2.6 74.6,1.6 67.9,0 42,0 42,0 42,0 16.1,0 9.4,1.6 5.7,2.6 2.8,5.5 1.8,9.2 0,15.9 0,29 0,29 0,29 0,42.1 1.8,48.8 2.8,52.5 5.7,55.4 9.4,56.4 16.1,58 42,58 42,58 42,58 67.9,58 74.6,56.4 78.3,55.4 81.2,52.5 82.2,48.8 84,42.1 84,29 84,29 84,29 84,15.9 82.2,9.2Z"/>
+  <!-- Pure White Play Triangle -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M33.6,41.4L55.7,29 33.6,16.6Z"/>
+</vector>

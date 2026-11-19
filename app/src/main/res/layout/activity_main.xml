@@ -1,276 +1,795 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E4E6E6EB"
-    android:fillViewport="true">
+    android:background="#F1F4ED">
 
-    <LinearLayout
+    <!-- Container for the 3 Pages -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="94dp">
+
+        <!-- ================= PAGE 1: HOME (DOWNLOADER) ================= -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/pageHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="visible">
 
             <LinearLayout
+                android:id="@+id/mainPanel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <!-- Logo -->
+                <!-- Header Logo -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
                     android:layout_gravity="center"
-                    android:textSize="32sp"
                     android:fontFamily="@font/akronim"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:text="@string/app_name"
+                    android:textColor="@color/black"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/akronim"
                     android:text="Fast YouTube Downloader"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/akronim"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"/>
+                    android:textSize="13sp" />
 
-                <!-- URL -->
+                <!-- URL Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="YouTube URL"
-                     app:boxBackgroundMode="filled"
-                    app:boxCornerRadiusTopStart="16dp"
-                    app:boxCornerRadiusTopEnd="16dp"
-                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxBackgroundMode="filled"
                     app:boxCornerRadiusBottomEnd="16dp"
-                >
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/urlInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textUri"
-                        android:textColorHighlight="@color/white"
                         android:textColor="@color/black"
-                        android:textColorHint="#F4F4F4"/>
+                        android:textColorHighlight="@color/white"
+                        android:textColorHint="#F4F4F4" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Fetch -->
+                <!-- Fetch Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fetchResBtn"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="Fetch Information"
                     android:layout_marginTop="16dp"
-                    app:cornerRadius="16dp"
-                    app:backgroundTint="@color/teal_200"
+                    android:text="Fetch Information"
                     android:textColor="@color/black"
-                    app:iconGravity="textStart"/>
+                    app:backgroundTint="@color/teal_200"
+                    app:cornerRadius="16dp"
+                    app:iconGravity="textStart" />
 
-                <!-- Preview -->
+                <!-- Video Preview Card (Thumbnail only) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/previewLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginTop="18dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="#D9D6D6"
                     app:cardCornerRadius="15dp"
-                    app:cardBackgroundColor="#D9D6D6">
+                    app:strokeWidth="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/videoThumbnail"
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="180dp"
-                            android:scaleType="centerCrop"/>
+                            android:layout_height="200dp">
+
+                            <ImageView
+                                android:id="@+id/videoThumbnail"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop" />
+
+                            <WebView
+                                android:id="@+id/videoPreview"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:visibility="gone" />
+
+                        </FrameLayout>
 
                         <TextView
                             android:id="@+id/videoTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
                             android:maxLines="2"
-                            android:padding="14dp"/>
+                            android:padding="14dp"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Format -->
-
+                <!-- Format Selection -->
                 <TextView
+                    android:id="@+id/formatLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Download Format"
+                    android:layout_marginTop="20dp"
+                    android:text="Select Format"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginTop="20dp"/>
+                    android:textStyle="bold" />
 
                 <RadioGroup
                     android:id="@+id/formatGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/radioMp4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MP4"
-                        android:textColor="@color/black"
-                        android:checked="true"/>
+                        android:text="Video (MP4)"
+                        android:textColor="@color/black" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/radioMp3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MP3"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="30dp"/>
+                        android:layout_marginStart="30dp"
+                        android:text="Audio (MP3)"
+                        android:textColor="@color/black" />
 
                 </RadioGroup>
 
-                <!-- Spinner -->
-
+                <!-- Dynamic Option Label: "Video Resolution" or "Audio Bitrate" -->
                 <TextView
-                    android:id="@+id/resLabel"
+                    android:id="@+id/optionLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Resolution"
+                    android:layout_marginTop="16dp"
+                    android:text="Quality Option"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginTop="16dp"/>
+                    android:visibility="gone" />
 
+                <!-- Dynamic Option Spinner: Resolutions for MP4 / Bitrates for MP3 -->
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/optionSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="8dp"
+                    android:background="@drawable/material_spinner_bg"
                     android:outlineAmbientShadowColor="@color/white"
-                    android:background="@drawable/material_spinner_bg"/>
+                    android:visibility="gone" />
 
-                <!-- Download -->
-
+                <!-- Download Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/downloadBtn"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
+                    android:layout_marginTop="20dp"
                     android:text="Download"
                     android:textColor="@color/black"
-                    android:layout_marginTop="20dp"
-                    app:cornerRadius="16dp"
                     app:backgroundTint="#00B894"
-                  />
+                    app:cornerRadius="16dp" />
 
-                <!-- Progress -->
-
+                <!-- Progress Layout -->
                 <LinearLayout
                     android:id="@+id/progressLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
                     android:orientation="vertical"
-                    android:layout_marginTop="20dp">
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/progressStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0%"
-                        android:textColor="#8B5CF6"/>
+                        android:textColor="#8B5CF6" />
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/downloadProgressBar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:max="100"/>
+                        android:max="100" />
 
                 </LinearLayout>
 
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"/>
+            </LinearLayout>
 
-                <!-- Social -->
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ================= PAGE 2: DOWNLOAD HISTORY ================= -->
+        <LinearLayout
+            android:id="@+id/pageHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- History Top Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Download History"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your saved videos and music"
+                        android:textColor="#7A7A7A"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRefreshHistory"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:icon="@drawable/ic_refresh"
+                    app:iconTint="@color/black" />
+
+            </LinearLayout>
+
+            <!-- Storage Location Banner -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:cardBackgroundColor="#EAEFE6"
+                app:strokeWidth="1dp"
+                app:strokeColor="#D2E5CE">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="10dp">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/profile"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="6dp"
-                        app:iconTint="@color/black"
-                        app:icon="@drawable/ic_developer"/>
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_nav_home"
+                        app:tint="#0F2B48" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/github"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:iconTint="@color/black"
-                        android:layout_margin="6dp"
-                        app:icon="@drawable/ic_github"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/instagram"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="6dp"
-                        app:iconTint="@color/black"
-                        app:icon="@drawable/ic_instagram"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Downloaded Files Location"
+                            android:textColor="#5E6C62"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/linkedin"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="6dp"
-                        app:iconTint="@color/black"
-                        app:icon="@drawable/ic_linkedin"/>
+                        <TextView
+                            android:id="@+id/txtStoragePath"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="📁 Internal Storage > Download > YTDownloader"
+                            android:textColor="#0F2B48"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:ellipsize="middle"
+                            android:singleLine="true" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/software"
-                        style="@style/Widget.Material3.Button.IconButton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:iconTint="@color/black"
-                        android:layout_margin="6dp"
-                        app:icon="@drawable/ic_link"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Empty State -->
+            <LinearLayout
+                android:id="@+id/emptyHistoryView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="32dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/ic_nav_history"
+                    app:tint="#B2BEC3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="No Downloads Yet"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Downloaded videos and songs will appear here. You can play, share, or delete them anytime."
+                    android:textColor="#7A7A7A"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <!-- History List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/historyRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingVertical="10dp" />
+
+        </LinearLayout>
+
+        <!-- ================= PAGE 3: ABOUT US ================= -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/pageAbout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- App Information Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:src="@drawable/ic_youtube_red" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/akronim"
+                            android:text="@string/app_name"
+                            android:textColor="@color/black"
+                            android:textSize="26sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/aboutAppVersion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Version 2026.8"
+                            android:textColor="#00B894"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="High-speed YouTube Video and Audio Downloader powered by Python Chaquopy and modern stream extraction."
+                            android:textColor="#555555"
+                            android:textSize="13sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCheckUpdate"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="14dp"
+                            android:text="Check for Updates"
+                            android:textColor="#6200EE"
+                            app:cornerRadius="10dp"
+                            app:strokeColor="#6200EE" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Developer Information Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="About Developer"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/ic_developer"
+                                app:tint="#6200EE" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sachin Patel (MOCO-SN)"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Full-Stack &amp; Android Developer"
+                                    android:textColor="#7A7A7A"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="16dp" />
+
+                        <!-- Developer Links -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Connect &amp; Social"
+                            android:textColor="#7A7A7A"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/profile"
+                                style="@style/Widget.Material3.Button.IconButton"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_margin="4dp"
+                                app:icon="@drawable/ic_developer"
+                                app:iconTint="@color/black" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/github"
+                                style="@style/Widget.Material3.Button.IconButton"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_margin="4dp"
+                                app:icon="@drawable/ic_github"
+                                app:iconTint="@color/black" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/instagram"
+                                style="@style/Widget.Material3.Button.IconButton"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_margin="4dp"
+                                app:icon="@drawable/ic_instagram"
+                                app:iconTint="@color/black" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/linkedin"
+                                style="@style/Widget.Material3.Button.IconButton"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_margin="4dp"
+                                app:icon="@drawable/ic_linkedin"
+                                app:iconTint="@color/black" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/software"
+                                style="@style/Widget.Material3.Button.IconButton"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_margin="4dp"
+                                app:icon="@drawable/ic_link"
+                                app:iconTint="@color/black" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Features Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Key Features"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="4dp"
+                            android:text="• Ultra-fast sub-second video information extraction\n• High quality MP4 video download up to 1080p\n• Audio bitrate options: 320k, 256k, 192k, 128k, 64k\n• Automatic indexing to Gallery and Music players\n• Built-in Download History manager"
+                            android:textColor="#555555"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Footer Copyright -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="18dp"
                     android:gravity="center"
                     android:text="© 2026 MOCOSN • All Rights Reserved"
                     android:textColor="#7A7A7A"
-                    android:textSize="11sp"
-                    android:layout_marginTop="12dp"/>
+                    android:textSize="11sp" />
 
             </LinearLayout>
-        
-    </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+
+    </FrameLayout>
+
+    <!-- ================= FLOATING PILL BOTTOM NAVIGATION (Like in Image) ================= -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/floatingBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="18dp"
+        app:cardBackgroundColor="#E5E9E0"
+        app:cardCornerRadius="34dp"
+        app:cardElevation="6dp"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:weightSum="3">
+
+            <!-- Tab 1: Home -->
+            <FrameLayout
+                android:id="@+id/navItemHome"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:id="@+id/navPillHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_nav_active_pill"
+                    android:gravity="center"
+                    android:minWidth="76dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="14dp">
+
+                    <ImageView
+                        android:id="@+id/navIconHome"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_nav_home"
+                        app:tint="#0F2B48" />
+
+                    <TextView
+                        android:id="@+id/navTextHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Home"
+                        android:textColor="#0F2B48"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <!-- Tab 2: History -->
+            <FrameLayout
+                android:id="@+id/navItemHistory"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:id="@+id/navPillHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minWidth="76dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="14dp">
+
+                    <ImageView
+                        android:id="@+id/navIconHistory"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_nav_history"
+                        app:tint="#5E6C62" />
+
+                    <TextView
+                        android:id="@+id/navTextHistory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="History"
+                        android:textColor="#5E6C62"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <!-- Tab 3: About Us -->
+            <FrameLayout
+                android:id="@+id/navItemAbout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:id="@+id/navPillAbout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minWidth="76dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="14dp">
+
+                    <ImageView
+                        android:id="@+id/navIconAbout"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_nav_about"
+                        app:tint="#5E6C62" />
+
+                    <TextView
+                        android:id="@+id/navTextAbout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="About Us"
+                        android:textColor="#5E6C62"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

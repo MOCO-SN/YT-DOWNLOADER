@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splash_bg">
+
+    <!-- Center YouTube Brand Lockup -->
+    <LinearLayout
+        android:id="@+id/splashLogoContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/splashLogoIcon"
+            android:layout_width="54dp"
+            android:layout_height="38dp"
+            android:src="@drawable/ic_youtube_logo_full" />
+
+        <TextView
+            android:id="@+id/splashLogoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="-0.03"
+            android:text="Downloader"
+            android:textColor="@color/splash_text_primary"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Bottom "from MOCOSN" Lockup (Matches YouTube's "from Google") -->
+    <LinearLayout
+        android:id="@+id/splashBottomContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.04"
+            android:text="from"
+            android:textColor="@color/splash_text_secondary"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:letterSpacing="0.08"
+            android:text="MOCOSN"
+            android:textColor="@color/splash_text_primary"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>
