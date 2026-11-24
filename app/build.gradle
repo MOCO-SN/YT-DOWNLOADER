@@ -30,32 +30,87 @@ android {
 
     buildTypes {
         release {
-            optimization {
-                enable false
-            }
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.22.1'
-        }
-    }
     buildFeatures {
         viewBinding true
         buildConfig true
+    }
+    packaging {
+        resources {
+            excludes += [
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "/META-INF/*.version",
+                "/META-INF/**/LICENSE.txt",
+                "/DebugProbesKt.bin",
+                "/kotlin-tooling-metadata.json",
+                "/kotlin/**.kotlin_builtins",
+                "/META-INF/*.kotlin_module"
+            ]
+        }
+    }
+    testOptions {
+        unitTests.includeAndroidResources = false
+        unitTests.all {
+            enabled = false
+        }
+    }
+}
+
+tasks.configureEach {
+    if (name == "assembleDebug") {
+        doLast {
+            def outputDir = layout.buildDirectory.dir("outputs/apk/debug").get().asFile
+            def defaultApk = new File(outputDir, "app-debug.apk")
+            def namedApk = new File(outputDir, "YT-Downloader-debug.apk")
+            if (defaultApk.exists()) {
+                java.nio.file.Files.copy(
+                    defaultApk.toPath(),
+                    namedApk.toPath(),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                )
+            }
+        }
+    }
+    if (name == "assembleRelease") {
+        doLast {
+            def outputDir = layout.buildDirectory.dir("outputs/apk/release").get().asFile
+            def defaultApk = new File(outputDir, "app-release.apk")
+            if (!defaultApk.exists()) {
+                defaultApk = new File(outputDir, "app-release-unsigned.apk")
+            }
+            def namedApk = new File(outputDir, "YT-Downloader-release.apk")
+            if (defaultApk.exists()) {
+                java.nio.file.Files.copy(
+                    defaultApk.toPath(),
+                    namedApk.toPath(),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                )
+            }
+        }
     }
 }
 
 chaquopy {
     defaultConfig {
-        buildPython "C:/Users/mocosn/AppData/Local/Programs/Python/Python313/python.exe"
+        buildPython "C:/Users/sachi/AppData/Local/Programs/Python/Python314/python.exe"
 
-        version "3.13"
+        version "3.14"
         pip {
             install("-r", "src/main/python/requirements.txt")
         }
